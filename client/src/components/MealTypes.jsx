@@ -61,7 +61,7 @@ const MealTypes = ({ searchQuery }) => {
               alt={meal.name}
               className="w-full h-40 object-cover"
             />
-            <div className=" flex flex-col flex-grow">
+            <div className=" flex flex-col flex-grow p-3">
               <div className="text-left flex-grow">
                 <h3 className="font-semibold text-lg line-clamp-2">{meal.name}</h3>
                 <p className="text-sm text-gray-600 mt-1 line-clamp-2">{meal.description}</p>
