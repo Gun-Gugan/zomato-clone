@@ -16,6 +16,7 @@ app.use(cors({
   origin: ['http://localhost:5173', 'https://zomato-clone-client.onrender.com'],
   credentials: true
 }));
+
 app.use(express.json());
 
 // Routes
@@ -25,14 +26,13 @@ app.use('/api/restaurants', restaurantRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/orders', orderRoutes);
 
-// Add root route FIRST
+// Root route
 app.get("/", (req, res) => {
   res.send("Zomato Clone Backend is running successfully!");
-}); 
+});
 
 // Catch-all for unmatched routes
 app.use((req, res) => {
-  console.log(`Unmatched route: ${req.method} ${req.url}`);
   res.status(404).json({ error: 'Route not found' });
 });
 
@@ -40,11 +40,9 @@ app.use((req, res) => {
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
-    console.log('MongoDB connected');
     const port = process.env.PORT || 5000;
-    app.listen(port, () => console.log(`Server running on port ${port}`));
+    app.listen(port);
   })
-  .catch((err) => {
-    console.error('MongoDB connection error:', err.message);
+  .catch(() => {
     process.exit(1);
   });

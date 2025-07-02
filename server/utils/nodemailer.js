@@ -17,17 +17,9 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-transporter.verify((error, success) => {
-  if (error) {
-    console.error('SMTP verification failed:', error.message, error.stack);
-  } else {
-    console.log('SMTP server is ready to send emails');
-  }
-});
+transporter.verify(() => {});
 
 export async function sendContactEmail({ name, email, subject, message }) {
-  console.log('Sending contact email with:', { name, email, subject, message, to: email, cc: process.env.ADMIN_EMAIL });
-
   const mailOptions = {
     from: `"Zomato Clone" <${process.env.GMAIL_USER}>`,
     to: email,
@@ -38,17 +30,27 @@ export async function sendContactEmail({ name, email, subject, message }) {
 
   try {
     const info = await transporter.sendMail(mailOptions);
-    console.log('Contact email sent successfully:', info.messageId);
     return info;
   } catch (error) {
-    console.error('Nodemailer error (contact email):', error.message, error.stack);
     throw new Error('Failed to send contact email');
   }
 }
 
 export async function sendOtpEmail(to, otp, purpose = 'verification') {
-  const subject = purpose === 'reset' ? 'Password Reset OTP' : purpose === 'delete' ? 'Account Deletion OTP' : 'Account Verification OTP';
-  const text = `Your OTP for ${purpose === 'reset' ? 'password reset' : purpose === 'delete' ? 'account deletion' : 'account verification'} is ${otp}. It is valid for 2 minutes.`;
+  const subject =
+    purpose === 'reset'
+      ? 'Password Reset OTP'
+      : purpose === 'delete'
+      ? 'Account Deletion OTP'
+      : 'Account Verification OTP';
+
+  const text = `Your OTP for ${
+    purpose === 'reset'
+      ? 'password reset'
+      : purpose === 'delete'
+      ? 'account deletion'
+      : 'account verification'
+  } is ${otp}. It is valid for 2 minutes.`;
 
   const mailOptions = {
     from: `"Zomato Clone" <${process.env.GMAIL_USER}>`,
@@ -59,10 +61,8 @@ export async function sendOtpEmail(to, otp, purpose = 'verification') {
 
   try {
     const info = await transporter.sendMail(mailOptions);
-    console.log(`OTP email sent to ${to}:`, info.messageId);
     return info;
   } catch (error) {
-    console.error('Nodemailer error (OTP email):', error.message, error.stack);
-    throw new Error(`Failed to send OTP email: ${error.message}`);
+    throw new Error('Failed to send OTP email');
   }
 }

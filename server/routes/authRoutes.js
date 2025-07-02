@@ -1,6 +1,17 @@
 import express from 'express';
 import rateLimit from 'express-rate-limit';
-import { registerUser, loginUser, sendLoginOtp, sendOtpRegister, sendResetOtp, resetPassword, getProfile, updateAddress, sendDeleteOtp, deleteAccount } from '../controllers/authController.js';
+import {
+  registerUser,
+  loginUser,
+  sendLoginOtp,
+  sendOtpRegister,
+  sendResetOtp,
+  resetPassword,
+  getProfile,
+  updateAddress,
+  sendDeleteOtp,
+  deleteAccount
+} from '../controllers/authController.js';
 import verifyToken from '../middleware/verifyToken.js';
 
 const router = express.Router();
@@ -15,10 +26,7 @@ const otpLimiter = rateLimit({
 router.post('/register', registerUser);
 router.post('/login', loginUser);
 router.post('/send-otp-register', otpLimiter, sendOtpRegister);
-router.post('/send-otp-login', otpLimiter, (req, res, next) => {
-  console.log('Route /api/auth/send-otp-login hit with body:', req.body);
-  sendLoginOtp(req, res);
-});
+router.post('/send-otp-login', otpLimiter, sendLoginOtp);
 router.post('/send-reset-otp', otpLimiter, sendResetOtp);
 router.post('/reset-password', resetPassword);
 router.get('/me', verifyToken, getProfile);
