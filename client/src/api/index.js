@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: 'http://localhost:5000/api',
+  baseURL: 'https://zomato-clone-utd8.onrender.com/api',
 });
 
 export const fetchMealTypes = () => API.get('/meal-types');
