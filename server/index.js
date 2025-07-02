@@ -22,6 +22,11 @@ app.use('/api/restaurants', restaurantRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/orders', orderRoutes);
 
+// Add root route FIRST
+app.get("/", (req, res) => {
+  res.send("Zomato Clone Backend is running successfully!");
+}); 
+
 // Catch-all for unmatched routes
 app.use((req, res) => {
   console.log(`Unmatched route: ${req.method} ${req.url}`);
