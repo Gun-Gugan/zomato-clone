@@ -26,10 +26,9 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setLoading(true);
     const timer = setTimeout(() => setLoading(false), 1000); 
     return () => clearTimeout(timer);
-  }, [location.pathname]);
+  }, []);
 
   if (loading) {
     return <Preloader />;
