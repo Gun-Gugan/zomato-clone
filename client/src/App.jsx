@@ -18,7 +18,7 @@ import TermsOfService from './components/TermsOfService';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import Preloader from './components/Preloader'; 
 
-function Layout() {
+function App() {
   const location = useLocation();
   const hideFooterRoutes = ['/login', '/register'];
   const shouldHideFooter = hideFooterRoutes.includes(location.pathname);
@@ -62,5 +62,5 @@ function Layout() {
   );
 }
 
-export default Layout;
+export default App;
 
